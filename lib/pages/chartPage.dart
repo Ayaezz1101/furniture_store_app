@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:my_ecommerce/providors/chartProvidor.dart';
 import 'package:my_ecommerce/widget/checkoutWidget.dart';
 import 'package:my_ecommerce/widget/quantityWidget.dart';
@@ -26,22 +25,55 @@ class _ChartPage extends State<ChartPage> {
               final product = chartList[index];
               return Card(
                 margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                elevation: 0,
                 color: Colors.grey[50],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: ListTile(
-                  leading: Image.network(product.image, width: 60),
-                  title: Text(
-                    product.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      // صورة المنتج
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: Image.network(
+                          product.image,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      // الاسم والسعر
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              "\$${product.price}",
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Quantity Widget
+                      Quantitywidget(product: product),
+                    ],
                   ),
-                  subtitle: Text(
-                    "\$${product.price}",
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                  trailing: Quantitywidget(product: product),
                 ),
               );
             },
@@ -49,9 +81,9 @@ class _ChartPage extends State<ChartPage> {
         },
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         height: 100,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color(0xFF416954),
           boxShadow: [BoxShadow(color: Colors.white, blurRadius: 5)],
         ),
@@ -64,7 +96,17 @@ class _ChartPage extends State<ChartPage> {
               ),
             );
           },
-          child: Text("Checkout"),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            foregroundColor: const Color(0xFF416954),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          child: const Text(
+            "Checkout",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
         ),
       ),
     );
